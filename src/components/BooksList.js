@@ -6,11 +6,19 @@ class BooksList extends Component {
     const rowBook = list.map((book, index)=>{
       return(
         <tr className="table__tr" key={index}>
-          <td className="table__td table__td--user">{book.title}</td>
-          <td className="table__td table__td--times">{book.genre}</td>
-          <td className="table__td table__td--sec">{book.prize}€</td>
-          <td className="table__td table__td--sec"><button className="table_btn" ><Link to={`/AddBook/`}>Update</Link></button></td>
-          <td className="table__td table__td--sec"><button className="table_btn">Delete</button></td>
+          <td className="table__td">{book.title}</td>
+          <td className="table__td">
+          <ul className='genres'>
+            {book.genre.map((genre, index)=>{
+                return(
+                    <li key={index} className='genre'>{genre}</li>
+                );
+            })}
+            </ul>
+          </td>
+          <td className="table__td">{book.prize}€</td>
+          <td className="table__td"><button className="table_btn" ><Link to={`/AddBook/`}>Update</Link></button></td>
+          <td className="table__td"><button className="table_btn">Delete</button></td>
         </tr>
       );
     });
@@ -20,33 +28,34 @@ class BooksList extends Component {
     const {booksList} = this.props;
 
     return(
-      <>
-        <div>BooksList</div>
+      <main className="main">
+        <h2>Catalog</h2>
+        <p>Total books: {booksList.length}</p>
         <table className="table" id="table">
         <thead className="table__thead">
           <tr className="table__tr-title">
-            <th className="table__th table__th-col1">
-              <div className="table__content table__content-col1">
-                <p className="table__title">Name</p>
+            <th className="table__th">
+              <div className="table__content">
+                <p className="table__title">Title</p>
               </div>
             </th>
-            <th className="table__th table__th-col2">
-              <div className="table__content table__content-col2">
+            <th className="table__th">
+              <div className="table__content">
                 <p className="table__title">Genre</p>
               </div>
             </th>
-            <th className="table__th table__th-col3">
-              <div className="table__content table__content-col3">
+            <th className="table__th">
+              <div className="table__content">
                 <p className="table__title">Prize</p>
               </div>
             </th>
-            <th className="table__th table__th-col3">
-              <div className="table__content table__content-col3">
+            <th className="table__th">
+              <div className="table__content">
                 <p className="table__title">Update</p>
               </div>
             </th>
-            <th className="table__th table__th-col3">
-              <div className="table__content table__content-col3">
+            <th className="table__th">
+              <div className="table__content">
                 <p className="table__title">Delete</p>
               </div>
             </th>
@@ -57,7 +66,7 @@ class BooksList extends Component {
           {this.mapBooks(booksList)}
         </tbody>
       </table>
-    </>
+    </main>
     );
   }
 }

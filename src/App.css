@@ -1,33 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 .App {
-  text-align: center;
+  width: 100vw;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.08em;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.main {
+  padding-top: 30px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/*Header Component*/
+.Header {
+  background: #e7e4da;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  padding: 0px 16px;
+}
+.Header_img {
+  padding: 20px;
+}
+.Header_nav {
+  list-style: none;
+  text-transform: uppercase;
+  display: flex;
+}
+.Header_nav-link {
+  border-right: 2px solid white;
+  padding: 4px 12px;
+}
+.Header_nav-link:last-child {
+  border: none;
+}
+.Link {
+  text-decoration: none;
+  color: black;
+}
+.Link:hover {
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+/*BooksList Component*/
+.table__thead {
+  background: #cccccc;
+  text-transform: uppercase;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.table__td {
+  padding: 22px 16px;
+}
+.table tr:nth-child(even) td{
+  background: #cccccc;
+}
+.table tr:nth-child(odd) td{
+  background: #f6f6f6;
 }
