@@ -5,15 +5,38 @@ import Header from './components/Header';
 import BooksList from './components/BooksList';
 import AddBook from './components/AddBook';
 import EditGenres from './components/EditGenres';
+import {fetchBooks} from './services/booksService';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      booksList: []
+    }
+  }
+
+  getBooks() {
+    fetchBooks()
+      .then(data => {
+        this.setState({
+          booksList: data
+        });
+      })
+  }
+
+  componentDidMount() {
+    this.getBooks();
+  }
+
   render() {
+    const {booksList} = this.state;
+    
     return (
       <div className="App">
         <Header />
         <Switch>
           <Route exact path="/" render={()=>
-            <BooksList />
+            <BooksList booksList={booksList} />
           }/>
           <Route path="/AddBook/" render={()=>
             <AddBook />
