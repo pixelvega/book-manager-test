@@ -1,0 +1,17 @@
+[
+    {   "id": "0",
+        "title": "Psicología del color: cómo actúan los colores sobre los sentimientos y la razón",
+        "genre": ["Psicología", "Design", "Sociología"],
+        "prize": "35"
+    },
+    {   "id": "1",
+        "title": "Introduction to Algorithms",
+        "genre": ["Informática"],
+        "prize": "32.5"
+    },
+    {   "id": "2",
+        "title": "El hacker y las hormigas",
+        "genre": ["Novela", "Ciencia ficción"],
+        "prize": "12.95"
+    }
+]
