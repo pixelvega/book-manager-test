@@ -34,10 +34,11 @@
 .Link {
   text-decoration: none;
   color: black;
+  &:hover {
+    color: white;
+  }
 }
-.Link:hover {
-  color: white;
-}
+
 /*BooksList Component*/
 .table__thead {
   background: #cccccc;
