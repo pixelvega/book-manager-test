@@ -40,6 +40,9 @@
 }
 
 /*BooksList Component*/
+.catalog_wrapper {
+  display: flex;
+}
 .table__thead {
   background: #cccccc;
   text-transform: uppercase;
@@ -52,4 +55,26 @@
 }
 .table tr:nth-child(odd) td{
   background: #f6f6f6;
+}
+
+/*FilterCheck Component*/
+.FilterCheck_wrapper {
+  padding: 22px 16px;
+}
+.FilterCheck_title {
+  font-size: 1em;
+}
+.FilterCheck_nav {
+  list-style: none;
+  padding: 0px;
+}
+.FilterCheck_nav-item {
+  padding: 10px 0px;
+}
+.option-genre {
+  display: flex;
+}
+.option-genre-label {
+  margin: 0px;
+  padding-left: 8px;
 }

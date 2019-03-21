@@ -13,19 +13,20 @@ class FilterCheck extends Component {
 
       const genres = uniqueGenres.map((genre, index) => {
         return (
-          <li key={index}>
+          <li key={index} className="FilterCheck_nav-item">
             <label htmlFor={genre} className="option-genre">
-              <input className="option-genre" id={genre} type="checkbox" value={genre} name={genre} />
-              <p className="genre">{genre}</p>
+              <input className="option-genre-input" id={genre} type="checkbox" value={genre} name={genre} />
+              <p className="option-genre-label">{genre}</p>
             </label>
           </li>
         );
       });
 
       return (
-        <>
-          <ul>{genres}</ul>
-        </>
+        <div className="FilterCheck_wrapper">
+          <h3 className="FilterCheck_title">Select by genre:</h3>
+          <ul className="FilterCheck_nav">{genres}</ul>
+        </div>
       );
 
     } else {

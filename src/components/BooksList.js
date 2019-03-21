@@ -30,48 +30,52 @@ class BooksList extends Component {
 
     return(
       <main className="main">
-        <div className="FilterCheck">
-          <FilterCheck booksList={booksList} groupedGenres={groupedGenres} />
-        </div>
-        <div className="catalog">
+        <div className="catalog_header">
           <h2>Catalog</h2>
           <p>Total books: {booksList.length}</p>
-          <table className="table" id="table">
-          <thead className="table__thead">
-            <tr className="table__tr-title">
-              <th className="table__th">
-                <div className="table__content">
-                  <p className="table__title">Title</p>
-                </div>
-              </th>
-              <th className="table__th">
-                <div className="table__content">
-                  <p className="table__title">Genre</p>
-                </div>
-              </th>
-              <th className="table__th">
-                <div className="table__content">
-                  <p className="table__title">Prize</p>
-                </div>
-              </th>
-              <th className="table__th">
-                <div className="table__content">
-                  <p className="table__title">Update</p>
-                </div>
-              </th>
-              <th className="table__th">
-                <div className="table__content">
-                  <p className="table__title">Delete</p>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="table__tbody">
-            {this.mapBooks(booksList)}
-          </tbody>
-        </table>
         </div>
-    </main>
+        <div className="catalog_wrapper">
+          <div className="FilterCheck">
+            <FilterCheck booksList={booksList} groupedGenres={groupedGenres} />
+          </div>
+          <div className="catalog">
+            <table className="table" id="table">
+              <thead className="table__thead">
+                <tr className="table__tr-title">
+                  <th className="table__th">
+                    <div className="table__content">
+                      <p className="table__title">Title</p>
+                    </div>
+                  </th>
+                  <th className="table__th">
+                    <div className="table__content">
+                      <p className="table__title">Genre</p>
+                    </div>
+                  </th>
+                  <th className="table__th">
+                    <div className="table__content">
+                      <p className="table__title">Prize</p>
+                    </div>
+                  </th>
+                  <th className="table__th">
+                    <div className="table__content">
+                      <p className="table__title">Update</p>
+                    </div>
+                  </th>
+                  <th className="table__th">
+                    <div className="table__content">
+                      <p className="table__title">Delete</p>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="table__tbody">
+                {this.mapBooks(booksList)}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
     );
   }
 }
