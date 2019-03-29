@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.scss";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import Header from "./components/Header";
 import BooksList from "./components/BooksList";
 import AddBook from "./components/AddBook";
@@ -13,7 +13,9 @@ class App extends Component {
     this.state = {
       booksList: [],
       groupedGenres: [],
-      genresSelected: []
+      genresSelected: [],
+      title: "",
+      prize: ""
     };
     this.handleFilterGenres = this.handleFilterGenres.bind(this);
     this.filterByGenres = this.filterByGenres.bind(this);
@@ -107,13 +109,51 @@ class App extends Component {
     return filteredBooks;
   }
 
+  handleTitle = e => {
+    const title = e.currentTarget.value;
+    this.setState({
+      title: title
+    });
+  };
+
+  handlePrize = e => {
+    const prize = e.currentTarget.value;
+    this.setState({
+      prize: prize
+    });
+  };
+
+  addNewBook = () => {
+    const { title, prize } = this.state;
+    const newBook = {
+      id: "",
+      title: title,
+      genre: [],
+      prize: prize
+    };
+
+    this.setState(prevState => {
+      const nextState = [...prevState.booksList, newBook];
+      return {
+        booksList: nextState
+      };
+    });
+    this.props.history.push("/");
+  };
+
   componentDidMount() {
     this.getBooks();
     this.filterByGenres();
   }
 
   render() {
-    const { booksList, groupedGenres, filteredBooksList } = this.state;
+    const {
+      booksList,
+      groupedGenres,
+      filteredBooksList,
+      title,
+      prize
+    } = this.state;
 
     return (
       <div className="App">
@@ -123,16 +163,25 @@ class App extends Component {
             exact
             path="/"
             render={() => (
-              <>
-                <BooksList
-                  booksList={this.filterByGenres()}
-                  groupedGenres={groupedGenres}
-                  handleFilterGenres={this.handleFilterGenres}
-                />
-              </>
+              <BooksList
+                booksList={this.filterByGenres()}
+                groupedGenres={groupedGenres}
+                handleFilterGenres={this.handleFilterGenres}
+              />
             )}
           />
-          <Route path="/AddBook/" render={() => <AddBook />} />
+          <Route
+            path="/AddBook/"
+            render={() => (
+              <AddBook
+                title={title}
+                handleTitle={this.handleTitle}
+                prize={prize}
+                handlePrize={this.handlePrize}
+                addNewBook={this.addNewBook}
+              />
+            )}
+          />
           <Route path="/EditGenres/" render={() => <EditGenres />} />
         </Switch>
       </div>
@@ -140,4 +189,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
