@@ -3,7 +3,15 @@ import { withRouter } from "react-router-dom";
 
 class AddBook extends Component {
   render() {
-    const { handleTitle, title, handlePrize, prize, addNewBook } = this.props;
+    const {
+      handleTitle,
+      title,
+      handlePrize,
+      prize,
+      saveBook,
+      index
+    } = this.props;
+
     return (
       <>
         <div>AddBook</div>
@@ -29,7 +37,13 @@ class AddBook extends Component {
             />
           </label>
         </div>
-        <button onClick={addNewBook}>Save</button>
+        <button
+          onClick={() => {
+            saveBook(index);
+          }}
+        >
+          Save
+        </button>
       </>
     );
   }

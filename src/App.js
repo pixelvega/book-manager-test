@@ -15,7 +15,9 @@ class App extends Component {
       groupedGenres: [],
       genresSelected: [],
       title: "",
-      prize: ""
+      prize: "",
+      index: "",
+      update: false
     };
     this.handleFilterGenres = this.handleFilterGenres.bind(this);
     this.filterByGenres = this.filterByGenres.bind(this);
@@ -123,22 +125,70 @@ class App extends Component {
     });
   };
 
-  addNewBook = () => {
-    const { title, prize } = this.state;
+  saveBook = index => {
+    const { booksList, title, prize, update } = this.state;
     const newBook = {
-      id: "",
+      id: index,
       title: title,
       genre: [],
       prize: prize
     };
+    const books = booksList;
 
-    this.setState(prevState => {
-      const nextState = [...prevState.booksList, newBook];
-      return {
-        booksList: nextState
-      };
+    if (update) {
+      for (let i = 0; i < books.length; i++) {
+        if (books[i].id === index) {
+          books[index] = newBook;
+          debugger;
+          i = books.length;
+        }
+      }
+    } else {
+      this.setState(prevState => {
+        const nextState = [...prevState.booksList, newBook];
+        return {
+          booksList: nextState
+        };
+      });
+    }
+    this.setState({
+      update: false
     });
     this.props.history.push("/");
+  };
+
+  deleteBook = index => {
+    const { booksList } = this.state;
+    const books = booksList;
+
+    books.splice(index, -1);
+  };
+
+  searchId(booksList, index) {
+    let id = booksList.findIndex(book => book.id === index);
+    return id;
+  }
+
+  deleteBook = index => {
+    const { booksList } = this.state;
+    const id = this.searchId(booksList, index);
+    const updatedBooks = booksList;
+    updatedBooks.splice(parseInt(id), 1);
+
+    this.setState({
+      booksList: updatedBooks
+    });
+  };
+
+  updateBook = (title, prize, index) => {
+    this.setState({
+      title: title,
+      prize: prize,
+      index: index,
+      update: true
+    });
+
+    this.props.history.push("/AddBook/");
   };
 
   componentDidMount() {
@@ -152,7 +202,8 @@ class App extends Component {
       groupedGenres,
       filteredBooksList,
       title,
-      prize
+      prize,
+      index
     } = this.state;
 
     return (
@@ -167,6 +218,8 @@ class App extends Component {
                 booksList={this.filterByGenres()}
                 groupedGenres={groupedGenres}
                 handleFilterGenres={this.handleFilterGenres}
+                updateBook={this.updateBook}
+                deleteBook={this.deleteBook}
               />
             )}
           />
@@ -178,7 +231,8 @@ class App extends Component {
                 handleTitle={this.handleTitle}
                 prize={prize}
                 handlePrize={this.handlePrize}
-                addNewBook={this.addNewBook}
+                saveBook={this.saveBook}
+                index={index}
               />
             )}
           />

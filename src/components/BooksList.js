@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import FilterCheck from "./FilterCheck";
 
 class BooksList extends Component {
-  mapBooks(list) {
+  // componentWillUpdate() {
+  //   this.mapBooks();
+  // }
+  mapBooks(list, updateBook, deleteBook) {
     const rowBook = list.map((book, index) => {
       return (
         <tr className="table__tr" key={index}>
@@ -21,12 +24,24 @@ class BooksList extends Component {
           </td>
           <td className="table__td">{book.prize}€</td>
           <td className="table__td">
-            <button className="table_btn">
-              <Link to={`/AddBook/`}>Update</Link>
+            <button
+              className="table_btn"
+              onClick={() => {
+                return updateBook(book.title, book.prize, book.id);
+              }}
+            >
+              Update
             </button>
           </td>
           <td className="table__td">
-            <button className="table_btn">Delete</button>
+            <button
+              className="table_btn"
+              onClick={() => {
+                return deleteBook(book.id);
+              }}
+            >
+              Delete
+            </button>
           </td>
         </tr>
       );
@@ -34,7 +49,13 @@ class BooksList extends Component {
     return rowBook;
   }
   render() {
-    const { booksList, handleFilterGenres, groupedGenres } = this.props;
+    const {
+      booksList,
+      handleFilterGenres,
+      groupedGenres,
+      updateBook,
+      deleteBook
+    } = this.props;
 
     if (booksList.length >= 0) {
       return (
@@ -84,7 +105,7 @@ class BooksList extends Component {
                   </tr>
                 </thead>
                 <tbody className="table__tbody">
-                  {this.mapBooks(booksList)}
+                  {this.mapBooks(booksList, updateBook, deleteBook)}
                 </tbody>
               </table>
             </div>
@@ -97,4 +118,4 @@ class BooksList extends Component {
   }
 }
 
-export default BooksList;
+export default withRouter(BooksList);
