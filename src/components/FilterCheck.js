@@ -1,21 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class FilterCheck extends Component {
   render() {
-    const { groupedGenres } = this.props;
+    const { groupedGenres, handleFilterGenres } = this.props;
     if (groupedGenres.length > 0) {
-      const arrGenres = groupedGenres.map((genre) => {
-        return genre.name;
+      const arrGenres = groupedGenres.map(genre => {
+        return genre;
       });
       const uniqueGenres = [...new Set(arrGenres)];
-      console.log(arrGenres);
-      console.log(uniqueGenres);
+      //console.log(arrGenres);
+      //console.log(uniqueGenres);
 
       const genres = uniqueGenres.map((genre, index) => {
         return (
           <li key={index} className="FilterCheck_nav-item">
             <label htmlFor={genre} className="option-genre">
-              <input className="option-genre-input" id={genre} type="checkbox" value={genre} name={genre} />
+              <input
+                className="option-genre-input"
+                id={genre}
+                type="checkbox"
+                value={genre}
+                name={genre}
+                onClick={handleFilterGenres}
+              />
               <p className="option-genre-label">{genre}</p>
             </label>
           </li>
@@ -28,12 +35,9 @@ class FilterCheck extends Component {
           <ul className="FilterCheck_nav">{genres}</ul>
         </div>
       );
-
     } else {
-      console.log(groupedGenres);
-      return (
-        <div>CheckboxList</div>
-      );
+      //console.log(groupedGenres);
+      return <div>CheckboxList</div>;
     }
   }
 }
