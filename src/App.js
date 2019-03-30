@@ -200,11 +200,12 @@ class App extends Component {
     }
   };
 
-  updateBook = (title, prize, id) => {
+  updateBook = (title, prize, id, genres) => {
     this.setState({
       title: title,
       prize: prize,
       index: id,
+      genres: genres,
       update: true
     });
 
@@ -217,8 +218,10 @@ class App extends Component {
       const { genres } = prevState;
       if (genres.indexOf(genre) === -1) {
         genres.push(genre);
+        return true;
       } else {
         genres.splice(genres.indexOf(genre), 1);
+        return false;
       }
     });
   };
@@ -242,7 +245,8 @@ class App extends Component {
       filteredBooksList,
       title,
       prize,
-      index
+      index,
+      genres
     } = this.state;
 
     return (
@@ -272,6 +276,7 @@ class App extends Component {
                 handlePrize={this.handlePrize}
                 saveBook={this.saveBook}
                 index={index}
+                genres={genres}
                 resetForm={this.resetForm}
                 groupedGenres={groupedGenres}
                 handleAddGenres={this.handleAddGenres}

@@ -13,7 +13,8 @@ class AddBook extends Component {
       index,
       resetForm,
       groupedGenres,
-      handleAddGenres
+      handleAddGenres,
+      genres
     } = this.props;
 
     return (
@@ -44,6 +45,7 @@ class AddBook extends Component {
         <div className="form-genres-group">
           <UpdateBookGenres
             groupedGenres={groupedGenres}
+            genres={genres}
             handleAddGenres={handleAddGenres}
           />
         </div>

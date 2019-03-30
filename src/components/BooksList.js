@@ -24,7 +24,7 @@ class BooksList extends Component {
             <button
               className="table_btn"
               onClick={() => {
-                return updateBook(book.title, book.prize, book.id);
+                return updateBook(book.title, book.prize, book.id, book.genre);
               }}
             >
               Update
