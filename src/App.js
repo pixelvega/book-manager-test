@@ -141,7 +141,7 @@ class App extends Component {
       for (let i = 0; i < books.length; i++) {
         if (books[i].id === index) {
           books[index] = newBook;
-          i = books.length;
+          break;
         }
       }
     } else {
@@ -162,19 +162,32 @@ class App extends Component {
   resetForm = () => {
     const { update, addBook } = this.state;
     let userConfirm = true;
+    let newID = this.generateNewId();
     if (update || addBook) {
       userConfirm = window.confirm(
         "Are you sure you want to discard the changes?"
       );
     }
     if (userConfirm) {
-      this.setState({
-        title: "",
-        prize: "",
-        index: "",
-        update: false,
-        addBook: true
-      });
+      if (addBook) {
+        this.setState({
+          title: "",
+          prize: "",
+          index: newID,
+          genres: [],
+          update: false,
+          addBook: true
+        });
+      } else {
+        this.setState({
+          title: "",
+          prize: "",
+          index: "",
+          genres: [],
+          update: false,
+          addBook: true
+        });
+      }
       this.props.history.push("/");
     }
   };
@@ -183,6 +196,21 @@ class App extends Component {
     let id = booksList.findIndex(book => book.id === index);
     return id;
   }
+
+  generateNewId = () => {
+    const { booksList } = this.state;
+    let newId = "0";
+    const arrIds = booksList.map(book => {
+      return book.id;
+    });
+    for (let i = 0; i <= arrIds.length; i++) {
+      newId = i.toString();
+      if (!arrIds.includes(newId)) {
+        break;
+      }
+    }
+    return newId;
+  };
 
   deleteBook = (index, title) => {
     const userConfirm = window.confirm(
