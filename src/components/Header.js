@@ -15,7 +15,7 @@ class Header extends Component {
         <nav className="Header_nav">
           <li className="Header_nav-link">
             <Link className="Link" to="/" replace onClick={checkView}>
-              Catalog
+              Catalogue
             </Link>
           </li>
           <li className="Header_nav-link">
