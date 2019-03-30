@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-class FilterCheck extends Component {
+class UpdateBookGenres extends Component {
   render() {
-    const { groupedGenres, handleFilterGenres } = this.props;
+    const { groupedGenres, handleAddGenres } = this.props;
     if (groupedGenres.length > 0) {
       const arrGenres = groupedGenres.map(genre => {
         return genre;
@@ -19,7 +19,7 @@ class FilterCheck extends Component {
                 type="checkbox"
                 value={genre}
                 name={genre}
-                onClick={handleFilterGenres}
+                onClick={handleAddGenres}
               />
               <p className="option-genre-label">{genre}</p>
             </label>
@@ -29,15 +29,14 @@ class FilterCheck extends Component {
 
       return (
         <div className="FilterCheck_wrapper">
-          <h3 className="FilterCheck_title">Select by genre:</h3>
+          <h3 className="FilterCheck_title">Select genre:</h3>
           <ul className="FilterCheck_nav">{genres}</ul>
         </div>
       );
     } else {
-      //console.log(groupedGenres);
       return <div>CheckboxList</div>;
     }
   }
 }
 
-export default FilterCheck;
+export default UpdateBookGenres;

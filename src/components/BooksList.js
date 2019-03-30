@@ -3,9 +3,6 @@ import { withRouter } from "react-router-dom";
 import FilterCheck from "./FilterCheck";
 
 class BooksList extends Component {
-  // componentWillUpdate() {
-  //   this.mapBooks();
-  // }
   mapBooks(list, updateBook, deleteBook) {
     const rowBook = list.map((book, index) => {
       return (
@@ -37,7 +34,7 @@ class BooksList extends Component {
             <button
               className="table_btn"
               onClick={() => {
-                return deleteBook(book.id);
+                return deleteBook(book.id, book.title);
               }}
             >
               Delete

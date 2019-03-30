@@ -17,7 +17,9 @@ class App extends Component {
       title: "",
       prize: "",
       index: "",
-      update: false
+      genres: [],
+      update: false,
+      addBook: false
     };
     this.handleFilterGenres = this.handleFilterGenres.bind(this);
     this.filterByGenres = this.filterByGenres.bind(this);
@@ -126,11 +128,11 @@ class App extends Component {
   };
 
   saveBook = index => {
-    const { booksList, title, prize, update } = this.state;
+    const { booksList, title, prize, genres, update } = this.state;
     const newBook = {
       id: index,
       title: title,
-      genre: [],
+      genre: genres,
       prize: prize
     };
     const books = booksList;
@@ -139,7 +141,6 @@ class App extends Component {
       for (let i = 0; i < books.length; i++) {
         if (books[i].id === index) {
           books[index] = newBook;
-          debugger;
           i = books.length;
         }
       }
@@ -152,16 +153,30 @@ class App extends Component {
       });
     }
     this.setState({
-      update: false
+      update: false,
+      addBook: false
     });
     this.props.history.push("/");
   };
 
-  deleteBook = index => {
-    const { booksList } = this.state;
-    const books = booksList;
-
-    books.splice(index, -1);
+  resetForm = () => {
+    const { update, addBook } = this.state;
+    let userConfirm = true;
+    if (update || addBook) {
+      userConfirm = window.confirm(
+        "Are you sure you want to discard the changes?"
+      );
+    }
+    if (userConfirm) {
+      this.setState({
+        title: "",
+        prize: "",
+        index: "",
+        update: false,
+        addBook: true
+      });
+      this.props.history.push("/");
+    }
   };
 
   searchId(booksList, index) {
@@ -169,26 +184,50 @@ class App extends Component {
     return id;
   }
 
-  deleteBook = index => {
-    const { booksList } = this.state;
-    const id = this.searchId(booksList, index);
-    const updatedBooks = booksList;
-    updatedBooks.splice(parseInt(id), 1);
+  deleteBook = (index, title) => {
+    const userConfirm = window.confirm(
+      `The book "${title}" will be deleted. Do you want to continue?`
+    );
+    if (userConfirm) {
+      const { booksList } = this.state;
+      const id = this.searchId(booksList, index);
+      const updatedBooks = booksList;
+      updatedBooks.splice(parseInt(id), 1);
 
-    this.setState({
-      booksList: updatedBooks
-    });
+      this.setState({
+        booksList: updatedBooks
+      });
+    }
   };
 
-  updateBook = (title, prize, index) => {
+  updateBook = (title, prize, id) => {
     this.setState({
       title: title,
       prize: prize,
-      index: index,
+      index: id,
       update: true
     });
 
     this.props.history.push("/AddBook/");
+  };
+
+  handleAddGenres = e => {
+    const genre = e.currentTarget.value;
+    this.setState(prevState => {
+      const { genres } = prevState;
+      if (genres.indexOf(genre) === -1) {
+        genres.push(genre);
+      } else {
+        genres.splice(genres.indexOf(genre), 1);
+      }
+    });
+  };
+
+  checkView = () => {
+    const { addBook, update } = this.state;
+    if (addBook || update) {
+      this.resetForm();
+    }
   };
 
   componentDidMount() {
@@ -208,7 +247,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header />
+        <Header checkView={this.checkView} />
         <Switch>
           <Route
             exact
@@ -233,6 +272,9 @@ class App extends Component {
                 handlePrize={this.handlePrize}
                 saveBook={this.saveBook}
                 index={index}
+                resetForm={this.resetForm}
+                groupedGenres={groupedGenres}
+                handleAddGenres={this.handleAddGenres}
               />
             )}
           />

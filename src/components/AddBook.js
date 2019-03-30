@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import UpdateBookGenres from "./UpdateBookGenres";
 
 class AddBook extends Component {
   render() {
@@ -9,7 +10,10 @@ class AddBook extends Component {
       handlePrize,
       prize,
       saveBook,
-      index
+      index,
+      resetForm,
+      groupedGenres,
+      handleAddGenres
     } = this.props;
 
     return (
@@ -37,13 +41,28 @@ class AddBook extends Component {
             />
           </label>
         </div>
-        <button
-          onClick={() => {
-            saveBook(index);
-          }}
-        >
-          Save
-        </button>
+        <div className="form-genres-group">
+          <UpdateBookGenres
+            groupedGenres={groupedGenres}
+            handleAddGenres={handleAddGenres}
+          />
+        </div>
+        <div className="form-buttons-group">
+          <button
+            onClick={() => {
+              saveBook(index);
+            }}
+          >
+            Save
+          </button>
+          <button
+            onClick={() => {
+              resetForm();
+            }}
+          >
+            Discard
+          </button>
+        </div>
       </>
     );
   }
