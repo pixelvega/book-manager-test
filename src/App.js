@@ -149,7 +149,8 @@ class App extends Component {
       this.setState(prevState => {
         const nextState = [...prevState.booksList, newBook];
         return {
-          booksList: nextState
+          booksList: nextState,
+          filteredBooks: nextState
         };
       });
     }
@@ -268,7 +269,6 @@ class App extends Component {
         genres.splice(genres.indexOf(genre), 1);
         return false;
       }
-      //return { ...prevState, genres: genres };
     });
   };
 
