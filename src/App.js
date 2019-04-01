@@ -199,14 +199,19 @@ class App extends Component {
     }
 
     if (userConfirm) {
-      console.log(userConfirm);
-      this.setState({
-        title: actualBook.title,
-        prize: actualBook.prize,
-        index: actualBook.index,
-        genres: actualBook.genres
-      });
-      this.props.history.push("/");
+      this.setState(
+        () => {
+          return {
+            title: actualBook.title,
+            prize: actualBook.prize,
+            index: actualBook.index,
+            genres: actualBook.genres
+          };
+        },
+        () => {
+          return this.props.history.push("/");
+        }
+      );
     }
   };
 
@@ -236,13 +241,13 @@ class App extends Component {
       title: title,
       prize: prize,
       index: id,
-      genres: genres
+      genres: [...genres]
     };
     this.setState({
       title: title,
       prize: prize,
       index: id,
-      genres: genres,
+      genres: [...genres],
       actualBook: actualBook
     });
 
@@ -255,11 +260,12 @@ class App extends Component {
       const { genres } = prevState;
       if (genres.indexOf(genre) === -1) {
         genres.push(genre);
-        return true;
+        // return true;
       } else {
         genres.splice(genres.indexOf(genre), 1);
-        return false;
+        // return false;
       }
+      return { ...prevState, genres: genres };
     });
   };
 
