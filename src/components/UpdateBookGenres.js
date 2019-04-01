@@ -19,6 +19,7 @@ class UpdateBookGenres extends Component {
       const uniqueGenres = [...new Set(arrGenres)];
 
       const genresCheckbox = uniqueGenres.map((genre, index) => {
+        console.log(genres);
         return (
           <li key={index} className="FilterCheck_nav-item">
             <label htmlFor={genre} className="option-genre">

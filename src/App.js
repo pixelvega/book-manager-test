@@ -11,6 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      filteredBooks: [],
       booksList: [],
       groupedGenres: [],
       genresSelected: [],
@@ -18,7 +19,9 @@ class App extends Component {
       prize: "",
       index: "",
       genres: [],
-      actualBook: {}
+      actualBook: {
+        genres: []
+      }
     };
     this.handleFilterGenres = this.handleFilterGenres.bind(this);
     this.filterByGenres = this.filterByGenres.bind(this);
@@ -27,7 +30,8 @@ class App extends Component {
   getBooks() {
     fetchBooks().then(data => {
       this.setState({
-        booksList: data
+        booksList: data,
+        filteredBooks: data
       });
       this.getGenres(data);
     });
@@ -90,10 +94,8 @@ class App extends Component {
   filterByGenres() {
     const { booksList, genresSelected } = this.state;
     let filteredBooks = [];
-    console.log("booksList", booksList);
     if (genresSelected.length <= 0) {
       filteredBooks = booksList;
-      return booksList;
     } else {
       for (const book of booksList) {
         const genres = book.genre;
@@ -106,9 +108,10 @@ class App extends Component {
           }
         }
       }
-      console.log("filteredBooks", filteredBooks);
     }
-    return filteredBooks;
+    this.setState({
+      filteredBooks: filteredBooks
+    });
   }
 
   handleTitle = e => {
@@ -260,12 +263,12 @@ class App extends Component {
       const { genres } = prevState;
       if (genres.indexOf(genre) === -1) {
         genres.push(genre);
-        // return true;
+        return true;
       } else {
         genres.splice(genres.indexOf(genre), 1);
-        // return false;
+        return false;
       }
-      return { ...prevState, genres: genres };
+      //return { ...prevState, genres: genres };
     });
   };
 
@@ -297,7 +300,14 @@ class App extends Component {
   }
 
   render() {
-    const { groupedGenres, title, prize, index, genres } = this.state;
+    const {
+      groupedGenres,
+      title,
+      prize,
+      index,
+      genres,
+      filteredBooks
+    } = this.state;
 
     return (
       <div className="App">
@@ -308,7 +318,7 @@ class App extends Component {
             path="/"
             render={() => (
               <BooksList
-                booksList={this.filterByGenres()}
+                booksList={filteredBooks}
                 groupedGenres={groupedGenres}
                 handleFilterGenres={this.handleFilterGenres}
                 updateBook={this.updateBook}

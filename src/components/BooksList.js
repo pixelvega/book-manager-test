@@ -53,7 +53,6 @@ class BooksList extends Component {
       updateBook,
       deleteBook
     } = this.props;
-
     if (booksList.length >= 0) {
       return (
         <main className="main">
