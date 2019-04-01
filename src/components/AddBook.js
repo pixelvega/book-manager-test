@@ -11,7 +11,7 @@ class AddBook extends Component {
       prize,
       saveBook,
       index,
-      resetForm,
+      discardChanges,
       groupedGenres,
       handleAddGenres,
       genres
@@ -59,7 +59,7 @@ class AddBook extends Component {
           </button>
           <button
             onClick={() => {
-              resetForm();
+              discardChanges(title, prize, index, genres);
             }}
           >
             Discard

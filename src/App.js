@@ -18,8 +18,7 @@ class App extends Component {
       prize: "",
       index: "",
       genres: [],
-      update: false,
-      addBook: false
+      actualBook: {}
     };
     this.handleFilterGenres = this.handleFilterGenres.bind(this);
     this.filterByGenres = this.filterByGenres.bind(this);
@@ -72,7 +71,6 @@ class App extends Component {
 
   handleFilterGenres(e) {
     const checkBoxActive = e.target.value;
-    const { booksList } = this.state;
     //console.log("checkBoxActive", checkBoxActive);
     this.setState(
       prevState => {
@@ -128,7 +126,7 @@ class App extends Component {
   };
 
   saveBook = index => {
-    const { booksList, title, prize, genres, update } = this.state;
+    const { booksList, title, prize, genres, pathname } = this.state;
     const newBook = {
       id: index,
       title: title,
@@ -137,7 +135,7 @@ class App extends Component {
     };
     const books = booksList;
 
-    if (update) {
+    if (pathname === "/EditBook/") {
       for (let i = 0; i < books.length; i++) {
         if (books[i].id === index) {
           books[index] = newBook;
@@ -152,50 +150,18 @@ class App extends Component {
         };
       });
     }
-    this.setState({
-      update: false,
-      addBook: false
-    });
     this.props.history.push("/");
   };
 
-  resetForm = () => {
-    const { update, addBook } = this.state;
-    let userConfirm = true;
+  clearForm = () => {
     let newID = this.generateNewId();
-    if (update || addBook) {
-      userConfirm = window.confirm(
-        "Are you sure you want to discard the changes?"
-      );
-    }
-    if (userConfirm) {
-      if (addBook) {
-        this.setState({
-          title: "",
-          prize: "",
-          index: newID,
-          genres: [],
-          update: false,
-          addBook: true
-        });
-      } else {
-        this.setState({
-          title: "",
-          prize: "",
-          index: "",
-          genres: [],
-          update: false,
-          addBook: true
-        });
-      }
-      this.props.history.push("/");
-    }
+    this.setState({
+      title: "",
+      prize: "",
+      index: newID,
+      genres: []
+    });
   };
-
-  searchId(booksList, index) {
-    let id = booksList.findIndex(book => book.id === index);
-    return id;
-  }
 
   generateNewId = () => {
     const { booksList } = this.state;
@@ -211,6 +177,43 @@ class App extends Component {
     }
     return newId;
   };
+
+  // confirmUnsavedChanges = () => {
+  //   const { pathname } = this.state;
+  //   let userConfirm = true;
+  //   if (pathname === "/AddBook/" || pathname === "/EditBook/") {
+  //     userConfirm = window.confirm(
+  //       "Are you sure you want to discard the changes?"
+  //     );
+  //   }
+  //   return userConfirm;
+  // };
+
+  discardChanges = () => {
+    const { pathname, actualBook } = this.state;
+    let userConfirm = true;
+    if (pathname === "/AddBook/" || pathname === "/EditBook/") {
+      userConfirm = window.confirm(
+        "Are you sure you want to discard the changes?"
+      );
+    }
+
+    if (userConfirm) {
+      console.log(userConfirm);
+      this.setState({
+        title: actualBook.title,
+        prize: actualBook.prize,
+        index: actualBook.index,
+        genres: actualBook.genres
+      });
+      this.props.history.push("/");
+    }
+  };
+
+  searchId(booksList, index) {
+    let id = booksList.findIndex(book => book.id === index);
+    return id;
+  }
 
   deleteBook = (index, title) => {
     const userConfirm = window.confirm(
@@ -229,15 +232,21 @@ class App extends Component {
   };
 
   updateBook = (title, prize, id, genres) => {
+    const actualBook = {
+      title: title,
+      prize: prize,
+      index: id,
+      genres: genres
+    };
     this.setState({
       title: title,
       prize: prize,
       index: id,
       genres: genres,
-      update: true
+      actualBook: actualBook
     });
 
-    this.props.history.push("/AddBook/");
+    this.props.history.push("/EditBook/");
   };
 
   handleAddGenres = e => {
@@ -255,9 +264,9 @@ class App extends Component {
   };
 
   checkView = () => {
-    const { addBook, update } = this.state;
-    if (addBook || update) {
-      this.resetForm();
+    const { pathname } = this.state;
+    if (pathname === "/AddBook/" || pathname === "/EditBook/") {
+      this.discardChanges();
     }
   };
 
@@ -266,20 +275,27 @@ class App extends Component {
     this.filterByGenres();
   }
 
+  savePathname(prevProps) {
+    const actualPathname = this.props.location.pathname;
+    const previousPathname = prevProps.location.pathname;
+    if (actualPathname !== previousPathname) {
+      console.log("Route change to: ", this.props.location.pathname);
+      this.setState({
+        pathname: actualPathname
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    this.savePathname(prevProps);
+  }
+
   render() {
-    const {
-      booksList,
-      groupedGenres,
-      filteredBooksList,
-      title,
-      prize,
-      index,
-      genres
-    } = this.state;
+    const { groupedGenres, title, prize, index, genres } = this.state;
 
     return (
       <div className="App">
-        <Header checkView={this.checkView} />
+        <Header checkView={this.checkView} clearForm={this.clearForm} />
         <Switch>
           <Route
             exact
@@ -305,7 +321,24 @@ class App extends Component {
                 saveBook={this.saveBook}
                 index={index}
                 genres={genres}
-                resetForm={this.resetForm}
+                discardChanges={this.discardChanges}
+                groupedGenres={groupedGenres}
+                handleAddGenres={this.handleAddGenres}
+              />
+            )}
+          />
+          <Route
+            path="/EditBook/"
+            render={() => (
+              <AddBook
+                title={title}
+                handleTitle={this.handleTitle}
+                prize={prize}
+                handlePrize={this.handlePrize}
+                saveBook={this.saveBook}
+                index={index}
+                genres={genres}
+                discardChanges={this.discardChanges}
                 groupedGenres={groupedGenres}
                 handleAddGenres={this.handleAddGenres}
               />
@@ -318,4 +351,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+export default withRouter(props => <App {...props} />);

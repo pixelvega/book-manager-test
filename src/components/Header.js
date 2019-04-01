@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 class Header extends Component {
   render() {
-    const { checkView } = this.props;
+    const { checkView, clearForm } = this.props;
     return (
       <header className="Header">
         <div className="Header_img">
@@ -19,7 +19,7 @@ class Header extends Component {
             </Link>
           </li>
           <li className="Header_nav-link">
-            <Link className="Link" to="/AddBook/" replace onClick={checkView}>
+            <Link className="Link" to="/AddBook/" replace onClick={clearForm}>
               New book
             </Link>
           </li>
