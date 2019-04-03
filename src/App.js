@@ -19,6 +19,7 @@ class App extends Component {
       prize: "",
       index: "",
       genres: [],
+      newGenre: "",
       actualBook: {
         genres: []
       }
@@ -44,14 +45,11 @@ class App extends Component {
     let groupedGenres = [];
     for (let i = 0; i < genres.length; i++) {
       let arrGenres = genres[i];
-      //console.log("arrGenres: ", i, arrGenres);
       for (let j = 0; j < arrGenres.length; j++) {
         let genre = arrGenres[j];
-        //console.log("genre", j, genre);
         groupedGenres.push(genre);
       }
     }
-    //console.log("groupedGenres", groupedGenres);
     this.setState({
       groupedGenres: groupedGenres
     });
@@ -75,16 +73,13 @@ class App extends Component {
 
   handleFilterGenres(e) {
     const checkBoxActive = e.target.value;
-    //console.log("checkBoxActive", checkBoxActive);
     this.setState(
       prevState => {
         const { genresSelected } = prevState;
         if (genresSelected.indexOf(checkBoxActive) === -1) {
           genresSelected.push(checkBoxActive);
-          //console.log("genresSelected", genresSelected);
         } else {
           genresSelected.splice(genresSelected.indexOf(checkBoxActive), 1);
-          //console.log("genresSelected ", genresSelected);
         }
       },
       () => this.filterByGenres()
@@ -125,6 +120,40 @@ class App extends Component {
     const prize = e.currentTarget.value;
     this.setState({
       prize: prize
+    });
+  };
+
+  handleNewGenre = e => {
+    const addedGenre = e.currentTarget.value;
+    this.setState({
+      newGenre: addedGenre
+    });
+  };
+
+  handleAddGenres = e => {
+    const genre = e.currentTarget.value;
+    this.setState(prevState => {
+      const { genres } = prevState;
+      if (genres.indexOf(genre) === -1) {
+        genres.push(genre);
+        return true;
+      } else {
+        genres.splice(genres.indexOf(genre), 1);
+        return false;
+      }
+    });
+  };
+
+  saveGenre = () => {
+    const { newGenre } = this.state;
+    this.setState(prevState => {
+      const nextStateGenres = [...prevState.genres, newGenre];
+      const nextStateGroupedGenres = [...prevState.groupedGenres, newGenre];
+      return {
+        genres: nextStateGenres,
+        newGenre: "",
+        groupedGenres: nextStateGroupedGenres
+      };
     });
   };
 
@@ -181,17 +210,6 @@ class App extends Component {
     }
     return newId;
   };
-
-  // confirmUnsavedChanges = () => {
-  //   const { pathname } = this.state;
-  //   let userConfirm = true;
-  //   if (pathname === "/AddBook/" || pathname === "/EditBook/") {
-  //     userConfirm = window.confirm(
-  //       "Are you sure you want to discard the changes?"
-  //     );
-  //   }
-  //   return userConfirm;
-  // };
 
   discardChanges = () => {
     const { pathname, actualBook } = this.state;
@@ -261,20 +279,6 @@ class App extends Component {
     this.props.history.push("/EditBook/");
   };
 
-  handleAddGenres = e => {
-    const genre = e.currentTarget.value;
-    this.setState(prevState => {
-      const { genres } = prevState;
-      if (genres.indexOf(genre) === -1) {
-        genres.push(genre);
-        return true;
-      } else {
-        genres.splice(genres.indexOf(genre), 1);
-        return false;
-      }
-    });
-  };
-
   checkView = () => {
     const { pathname } = this.state;
     if (pathname === "/AddBook/" || pathname === "/EditBook/") {
@@ -309,6 +313,7 @@ class App extends Component {
       prize,
       index,
       genres,
+      newGenre,
       filteredBooks
     } = this.state;
 
@@ -342,7 +347,10 @@ class App extends Component {
                 genres={genres}
                 discardChanges={this.discardChanges}
                 groupedGenres={groupedGenres}
+                handleNewGenre={this.handleNewGenre}
+                newGenre={newGenre}
                 handleAddGenres={this.handleAddGenres}
+                saveGenre={this.saveGenre}
               />
             )}
           />
@@ -359,7 +367,10 @@ class App extends Component {
                 genres={genres}
                 discardChanges={this.discardChanges}
                 groupedGenres={groupedGenres}
+                handleNewGenre={this.handleNewGenre}
+                newGenre={newGenre}
                 handleAddGenres={this.handleAddGenres}
+                saveGenre={this.saveGenre}
               />
             )}
           />
