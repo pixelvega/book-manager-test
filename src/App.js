@@ -138,15 +138,24 @@ class App extends Component {
 
   saveGenre = () => {
     const { newGenre } = this.state;
-    this.setState(prevState => {
-      const nextStateGenres = [...prevState.genres, newGenre];
-      const nextStateGroupedGenres = [...prevState.groupedGenres, newGenre];
-      return {
-        genres: nextStateGenres,
-        newGenre: "",
-        groupedGenres: nextStateGroupedGenres
-      };
-    });
+    const { genres } = this.state;
+
+    if (genres.includes(newGenre)) {
+      alert("este género ya existe");
+      this.setState({
+        newGenre: ""
+      });
+    } else {
+      this.setState(prevState => {
+        const nextStateGenres = [...prevState.genres, newGenre];
+        const nextStateGroupedGenres = [...prevState.groupedGenres, newGenre];
+        return {
+          genres: nextStateGenres,
+          newGenre: "",
+          groupedGenres: nextStateGroupedGenres
+        };
+      });
+    }
   };
 
   saveBook = index => {
