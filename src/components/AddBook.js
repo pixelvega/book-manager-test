@@ -14,7 +14,10 @@ class AddBook extends Component {
       discardChanges,
       groupedGenres,
       handleAddGenres,
-      genres
+      genres,
+      handleNewGenre,
+      newGenre,
+      saveGenre
     } = this.props;
 
     return (
@@ -48,6 +51,22 @@ class AddBook extends Component {
             genres={genres}
             handleAddGenres={handleAddGenres}
           />
+          <label className="form-new-genre-label">
+            <h2 className="form-new-genre-title">Add Genre:</h2>
+            <input
+              id="new-genre"
+              type="text"
+              onChange={handleNewGenre}
+              value={newGenre}
+            />
+          </label>
+          <button
+            onClick={() => {
+              saveGenre();
+            }}
+          >
+            Save Genre
+          </button>
         </div>
         <div className="form-buttons-group">
           <button
