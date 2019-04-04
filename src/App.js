@@ -45,16 +45,13 @@ class App extends Component {
     let groupedGenres = [];
     for (let i = 0; i < genres.length; i++) {
       let arrGenres = genres[i];
-      //console.log("arrGenres: ", i, arrGenres);
       for (let j = 0; j < arrGenres.length; j++) {
         let genre = arrGenres[j];
-        //console.log("genre", j, genre);
         groupedGenres.push(genre);
       }
     }
-    //console.log("groupedGenres", groupedGenres);
     this.setState({
-      groupedGenres: groupedGenres
+      groupedGenres: groupedGenres.sort()
     });
   }
 
@@ -76,16 +73,13 @@ class App extends Component {
 
   handleFilterGenres(e) {
     const checkBoxActive = e.target.value;
-    //console.log("checkBoxActive", checkBoxActive);
     this.setState(
       prevState => {
         const { genresSelected } = prevState;
         if (genresSelected.indexOf(checkBoxActive) === -1) {
           genresSelected.push(checkBoxActive);
-          //console.log("genresSelected", genresSelected);
         } else {
           genresSelected.splice(genresSelected.indexOf(checkBoxActive), 1);
-          //console.log("genresSelected ", genresSelected);
         }
       },
       () => this.filterByGenres()
@@ -167,11 +161,11 @@ class App extends Component {
       prize: prize
     };
     const books = booksList;
-
     if (pathname === "/EditBook/") {
       for (let i = 0; i < books.length; i++) {
         if (books[i].id === index) {
           books[index] = newBook;
+          this.getGenres(books);
           break;
         }
       }
@@ -214,6 +208,7 @@ class App extends Component {
 
   discardChanges = () => {
     const { pathname, actualBook, booksList } = this.state;
+    this.getGenres(booksList);
     let userConfirm = true;
     if (pathname === "/AddBook/" || pathname === "/EditBook/") {
       userConfirm = window.confirm(
@@ -282,7 +277,6 @@ class App extends Component {
 
   handleAddGenres = e => {
     const genre = e.currentTarget.value;
-    const { booksList } = this.state;
     this.setState(prevState => {
       const { genres } = prevState;
       if (genres.indexOf(genre) === -1) {
@@ -311,7 +305,6 @@ class App extends Component {
     const actualPathname = this.props.location.pathname;
     const previousPathname = prevProps.location.pathname;
     if (actualPathname !== previousPathname) {
-      console.log("Route change to: ", this.props.location.pathname);
       this.setState({
         pathname: actualPathname
       });

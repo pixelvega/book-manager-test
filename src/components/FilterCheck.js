@@ -34,7 +34,6 @@ class FilterCheck extends Component {
         </div>
       );
     } else {
-      //console.log(groupedGenres);
       return <div>CheckboxList</div>;
     }
   }
