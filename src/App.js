@@ -255,9 +255,12 @@ class App extends Component {
       const updatedBooks = booksList;
       updatedBooks.splice(parseInt(id), 1);
 
-      this.setState({
-        booksList: updatedBooks
-      });
+      this.setState(
+        {
+          booksList: updatedBooks
+        },
+        this.getGenres(updatedBooks)
+      );
     }
   };
 
