@@ -20,6 +20,7 @@ class App extends Component {
       index: "",
       genres: [],
       newGenre: "",
+      radioGenre: "",
       actualBook: {
         genres: []
       }
@@ -85,6 +86,14 @@ class App extends Component {
       () => this.filterByGenres()
     );
   }
+
+  handleEditGenre = e => {
+    const genreSelected = e.target.value;
+    console.log("target", genreSelected);
+    this.setState({
+      radioGenre: genreSelected
+    });
+  };
 
   filterByGenres() {
     const { booksList, genresSelected } = this.state;
@@ -314,6 +323,7 @@ class App extends Component {
       index,
       genres,
       newGenre,
+      radioGenre,
       filteredBooks
     } = this.state;
 
@@ -349,7 +359,6 @@ class App extends Component {
                 groupedGenres={groupedGenres}
                 handleNewGenre={this.handleNewGenre}
                 newGenre={newGenre}
-                handleAddGenres={this.handleAddGenres}
                 saveGenre={this.saveGenre}
               />
             )}
