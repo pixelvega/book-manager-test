@@ -221,7 +221,7 @@ class App extends Component {
   };
 
   discardChanges = () => {
-    const { pathname, actualBook } = this.state;
+    const { pathname, actualBook, booksList } = this.state;
     let userConfirm = true;
     if (pathname === "/AddBook/" || pathname === "/EditBook/") {
       userConfirm = window.confirm(
@@ -287,6 +287,21 @@ class App extends Component {
 
     this.props.history.push("/EditBook/");
   };
+
+  // handleAddGenres = e => {
+  //   const genre = e.currentTarget.value;
+  //   const { booksList } = this.state;
+  //   this.setState(prevState => {
+  //     const { genres } = prevState;
+  //     if (genres.indexOf(genre) === -1) {
+  //       genres.push(genre);
+  //       return true;
+  //     } else {
+  //       genres.splice(genres.indexOf(genre), 1);
+  //       return false;
+  //     }
+  //   });
+  // };
 
   checkView = () => {
     const { pathname } = this.state;
@@ -359,6 +374,7 @@ class App extends Component {
                 groupedGenres={groupedGenres}
                 handleNewGenre={this.handleNewGenre}
                 newGenre={newGenre}
+                handleAddGenres={this.handleAddGenres}
                 saveGenre={this.saveGenre}
               />
             )}
