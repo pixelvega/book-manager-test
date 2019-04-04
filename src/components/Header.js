@@ -7,10 +7,11 @@ class Header extends Component {
     return (
       <header className="Header">
         <div className="Header_img">
-          <img
+          {/* <img
             src="https://img.icons8.com/ios/50/000000/book-filled.png"
             alt="logo Book Store"
-          />
+          /> */}
+          <i className="fas fa-book" />
         </div>
         <nav className="Header_nav">
           <li className="Header_nav-link">

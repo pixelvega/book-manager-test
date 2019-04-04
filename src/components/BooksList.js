@@ -7,7 +7,7 @@ class BooksList extends Component {
     const rowBook = list.map((book, index) => {
       return (
         <tr className="table__tr" key={index}>
-          <td className="table__td">{book.title}</td>
+          <td className="table__td table__td-title">{book.title}</td>
           <td className="table__td">
             <ul className="genres">
               {book.genre.map((genre, index) => {
@@ -20,24 +20,24 @@ class BooksList extends Component {
             </ul>
           </td>
           <td className="table__td">{book.prize}€</td>
-          <td className="table__td">
+          <td className="table__td table__td-btn">
             <button
-              className="table_btn"
+              className="btn table_btn-update"
               onClick={() => {
                 return updateBook(book.title, book.prize, book.id, book.genre);
               }}
             >
-              Update
+              <i className="fas fa-edit" />
             </button>
           </td>
-          <td className="table__td">
+          <td className="table__td table__td-btn">
             <button
-              className="table_btn"
+              className="btn table_btn-delete"
               onClick={() => {
                 return deleteBook(book.id, book.title);
               }}
             >
-              Delete
+              <i className="fas fa-trash-alt" />
             </button>
           </td>
         </tr>
@@ -47,6 +47,7 @@ class BooksList extends Component {
   }
   render() {
     const {
+      allBooks,
       booksList,
       handleFilterGenres,
       groupedGenres,
@@ -56,20 +57,29 @@ class BooksList extends Component {
     if (booksList.length >= 0) {
       return (
         <main className="main">
-          <div className="catalog_header">
-            <h2>Catalog</h2>
-            <p>Total books: {booksList.length}</p>
+          <div className="catalogue_header">
+            <h2>Catalogue of books</h2>
+            <p>
+              Showing{" "}
+              <span className="catalogue_header-p-number">{`${
+                booksList.length
+              }`}</span>{" "}
+              of{" "}
+              <span className="catalogue_header-p-number">{`${
+                allBooks.length
+              }`}</span>{" "}
+              books
+            </p>
           </div>
-          <div className="catalog_wrapper">
+          <div className="catalogue_wrapper">
             <div className="FilterCheck">
-              FilterCheck Component
               <FilterCheck
                 booksList={booksList}
                 groupedGenres={groupedGenres}
                 handleFilterGenres={handleFilterGenres}
               />
             </div>
-            <div className="catalog">
+            <div className="catalogue">
               <table className="table" id="table">
                 <thead className="table__thead">
                   <tr className="table__tr-title">
@@ -109,7 +119,7 @@ class BooksList extends Component {
         </main>
       );
     } else {
-      return <div>no hay datos</div>;
+      return <div>No hay datos</div>;
     }
   }
 }

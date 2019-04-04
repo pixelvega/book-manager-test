@@ -350,6 +350,7 @@ class App extends Component {
 
   render() {
     const {
+      booksList,
       groupedGenres,
       title,
       prize,
@@ -370,6 +371,7 @@ class App extends Component {
             path="/"
             render={() => (
               <BooksList
+                allBooks={booksList}
                 booksList={filteredBooks}
                 groupedGenres={groupedGenres}
                 handleFilterGenres={this.handleFilterGenres}
