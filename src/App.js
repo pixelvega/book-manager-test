@@ -216,6 +216,7 @@ class App extends Component {
         }
       }
     } else {
+      this.getGenres(books);
       this.setState(prevState => {
         const nextState = [...prevState.booksList, newBook];
         return {
