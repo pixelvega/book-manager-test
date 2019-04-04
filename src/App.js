@@ -169,6 +169,10 @@ class App extends Component {
         books[i].genre.splice(indexOfGenre, 1, editedGenre);
       }
     }
+    this.setState({
+      radioGenre: "",
+      editedGenre: ""
+    });
     this.getGenres(books);
   };
 
@@ -352,7 +356,8 @@ class App extends Component {
       genres,
       newGenre,
       filteredBooks,
-      radioGenre
+      radioGenre,
+      editedGenre
     } = this.state;
 
     return (
@@ -421,6 +426,7 @@ class App extends Component {
                 handleEditGenre={this.handleEditGenre}
                 handleEditTextGenre={this.handleEditTextGenre}
                 saveEditedGenre={this.saveEditedGenre}
+                editedGenre={editedGenre}
               />
             )}
           />

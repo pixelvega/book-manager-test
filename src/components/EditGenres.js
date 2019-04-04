@@ -7,7 +7,8 @@ class EditGenres extends Component {
       handleEditGenre,
       handleEditTextGenre,
       saveEditedGenre,
-      radioGenre
+      radioGenre,
+      editedGenre
     } = this.props;
     if (groupedGenres.length > 0) {
       const arrGenres = groupedGenres.map(genre => {
@@ -26,6 +27,7 @@ class EditGenres extends Component {
                 type="radio"
                 value={genre}
                 name="edit"
+                checked={radioGenre === genre ? true : false}
                 onChange={handleEditGenre}
               />
               <p className="option-genre-label">{genre}</p>
@@ -46,8 +48,9 @@ class EditGenres extends Component {
               id={radioGenre}
               type="text"
               name="edit"
+              value={editedGenre}
               placeholder={radioGenre}
-              onKeyUp={handleEditTextGenre}
+              onChange={handleEditTextGenre}
             />
           </label>
           <button onClick={saveEditedGenre}>Save Edition</button>
