@@ -1,15 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+/*Colors*/
+$dark-grey: #222222;
+$natural-white: #fcfbf8;
+$accent-color: #73ff73;
+$cancel-red: #ff5350;
+
+/*Common*/
 .App {
   width: 100vw;
-  font-family: 'Roboto', sans-serif;
+  min-width: 768px;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
   letter-spacing: 0.08em;
+  background-color: $natural-white;
 }
 .main {
-  padding-top: 30px;
+  padding: 30px;
 }
 /*Header Component*/
 .Header {
-  background: #e7e4da;
+  background: $dark-grey;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -18,6 +29,13 @@
 }
 .Header_img {
   padding: 20px;
+  font-size: 50px;
+  color: $accent-color;
+  transition: all 0.5s;
+  &:hover {
+    transform: rotate(30deg);
+    cursor: pointer;
+  }
 }
 .Header_nav {
   list-style: none;
@@ -25,7 +43,7 @@
   display: flex;
 }
 .Header_nav-link {
-  border-right: 2px solid white;
+  border-right: 2px solid $natural-white;
   padding: 4px 12px;
 }
 .Header_nav-link:last-child {
@@ -33,33 +51,86 @@
 }
 .Link {
   text-decoration: none;
-  color: black;
+  color: $natural-white;
+  transition: all 0.5s;
   &:hover {
-    color: white;
+    color: $accent-color;
   }
 }
 
 /*BooksList Component*/
-.catalog_wrapper {
-  display: flex;
+.catalogue_header {
+  width: 100vw;
+  grid-area: header;
+  text-align: center;
+}
+.catalogue_wrapper {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  grid-gap: 30px;
+  grid-template-areas:
+    "header"
+    "content"
+    "sidebar";
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
 }
 .table__thead {
-  background: #cccccc;
   text-transform: uppercase;
+  color: $dark-grey;
+  display: none;
+}
+.table__tr {
+  width: 100%;
+  border-bottom: 1px solid grey;
+  display: grid;
+  grid-template-columns: 4fr 2fr 1fr 1fr 1fr;
+}
+.table__tr:last-child {
+  border-bottom: 0px;
 }
 .table__td {
   padding: 22px 16px;
+  align-self: center;
 }
-.table tr:nth-child(even) td{
-  background: #cccccc;
+.table__td-title {
+  color: $dark-grey;
+  font-weight: 700;
 }
-.table tr:nth-child(odd) td{
-  background: #f6f6f6;
+.table__td-btn {
+  justify-self: center;
+}
+.btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.table_btn-update {
+  color: $dark-grey;
+  &:hover {
+    color: $accent-color;
+  }
+}
+.table_btn-delete {
+  color: $dark-grey;
+  &:hover {
+    color: $cancel-red;
+  }
 }
 
 /*FilterCheck Component*/
+.FilterCheck {
+  border-right: 1px solid grey;
+}
 .FilterCheck_wrapper {
-  padding: 22px 16px;
+  grid-area: sidebar;
+  min-width: 150px;
+  padding-right: 20px;
 }
 .FilterCheck_title {
   font-size: 1em;
@@ -72,9 +143,22 @@
   padding: 10px 0px;
 }
 .option-genre {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20px 1fr;
 }
 .option-genre-label {
   margin: 0px;
   padding-left: 8px;
 }
+.option-genre-input:checked {
+  background: $accent-color;
+}
+
+/*AddBook Component*/
+// width: 100px;
+// height: 40px;
+// letter-spacing: 1px;
+// text-transform: uppercase;
+// font-weight: 600;
+// font-size: 1em;
+// color: black;
