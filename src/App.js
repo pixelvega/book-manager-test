@@ -393,7 +393,15 @@ class App extends Component {
               />
             )}
           />
-          <Route path="/EditGenres/" render={() => <EditGenres />} />
+          <Route
+            path="/EditGenres/"
+            render={() => (
+              <EditGenres
+                groupedGenres={groupedGenres}
+                handleEditGenre={this.handleEditGenre}
+              />
+            )}
+          />
         </Switch>
       </div>
     );
