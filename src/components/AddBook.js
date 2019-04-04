@@ -52,7 +52,7 @@ class AddBook extends Component {
             handleAddGenres={handleAddGenres}
           />
           <label className="form-new-genre-label">
-            <h2 className="form-new-genre-title">Add Genre:</h2>
+            <h2 className="form-new-genre-title">Add new Genre:</h2>
             <input
               id="new-genre"
               type="text"

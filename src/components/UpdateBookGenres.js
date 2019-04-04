@@ -43,7 +43,7 @@ class UpdateBookGenres extends Component {
 
       return (
         <div className="FilterCheck_wrapper">
-          <h3 className="FilterCheck_title">Select genre:</h3>
+          <h2 className="FilterCheck_title">Select from existing genres:</h2>
           <ul className="FilterCheck_nav">{genresCheckbox}</ul>
         </div>
       );

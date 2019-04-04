@@ -203,19 +203,8 @@ class App extends Component {
     return newId;
   };
 
-  // confirmUnsavedChanges = () => {
-  //   const { pathname } = this.state;
-  //   let userConfirm = true;
-  //   if (pathname === "/AddBook/" || pathname === "/EditBook/") {
-  //     userConfirm = window.confirm(
-  //       "Are you sure you want to discard the changes?"
-  //     );
-  //   }
-  //   return userConfirm;
-  // };
-
   discardChanges = () => {
-    const { pathname, actualBook } = this.state;
+    const { pathname, actualBook, booksList } = this.state;
     let userConfirm = true;
     if (pathname === "/AddBook/" || pathname === "/EditBook/") {
       userConfirm = window.confirm(
@@ -284,6 +273,7 @@ class App extends Component {
 
   handleAddGenres = e => {
     const genre = e.currentTarget.value;
+    const { booksList } = this.state;
     this.setState(prevState => {
       const { genres } = prevState;
       if (genres.indexOf(genre) === -1) {
