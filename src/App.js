@@ -52,7 +52,7 @@ class App extends Component {
       }
     }
     this.setState({
-      groupedGenres: groupedGenres
+      groupedGenres: groupedGenres.sort()
     });
   }
 
@@ -155,15 +155,24 @@ class App extends Component {
 
   saveGenre = () => {
     const { newGenre } = this.state;
-    this.setState(prevState => {
-      const nextStateGenres = [...prevState.genres, newGenre];
-      const nextStateGroupedGenres = [...prevState.groupedGenres, newGenre];
-      return {
-        genres: nextStateGenres,
-        newGenre: "",
-        groupedGenres: nextStateGroupedGenres
-      };
-    });
+    const { genres } = this.state;
+
+    if (genres.includes(newGenre)) {
+      alert("este género ya existe");
+      this.setState({
+        newGenre: ""
+      });
+    } else {
+      this.setState(prevState => {
+        const nextStateGenres = [...prevState.genres, newGenre];
+        const nextStateGroupedGenres = [...prevState.groupedGenres, newGenre];
+        return {
+          genres: nextStateGenres,
+          newGenre: "",
+          groupedGenres: nextStateGroupedGenres
+        };
+      });
+    }
   };
 
   saveBook = index => {
@@ -175,11 +184,11 @@ class App extends Component {
       prize: prize
     };
     const books = booksList;
-
     if (pathname === "/EditBook/") {
       for (let i = 0; i < books.length; i++) {
         if (books[i].id === index) {
           books[index] = newBook;
+          this.getGenres(books);
           break;
         }
       }
@@ -222,6 +231,7 @@ class App extends Component {
 
   discardChanges = () => {
     const { pathname, actualBook, booksList } = this.state;
+    this.getGenres(booksList);
     let userConfirm = true;
     if (pathname === "/AddBook/" || pathname === "/EditBook/") {
       userConfirm = window.confirm(
@@ -288,21 +298,6 @@ class App extends Component {
     this.props.history.push("/EditBook/");
   };
 
-  // handleAddGenres = e => {
-  //   const genre = e.currentTarget.value;
-  //   const { booksList } = this.state;
-  //   this.setState(prevState => {
-  //     const { genres } = prevState;
-  //     if (genres.indexOf(genre) === -1) {
-  //       genres.push(genre);
-  //       return true;
-  //     } else {
-  //       genres.splice(genres.indexOf(genre), 1);
-  //       return false;
-  //     }
-  //   });
-  // };
-
   checkView = () => {
     const { pathname } = this.state;
     if (pathname === "/AddBook/" || pathname === "/EditBook/") {
@@ -319,7 +314,6 @@ class App extends Component {
     const actualPathname = this.props.location.pathname;
     const previousPathname = prevProps.location.pathname;
     if (actualPathname !== previousPathname) {
-      console.log("Route change to: ", this.props.location.pathname);
       this.setState({
         pathname: actualPathname
       });
