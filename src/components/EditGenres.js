@@ -2,7 +2,13 @@ import React, { Component } from "react";
 
 class EditGenres extends Component {
   render() {
-    const { groupedGenres, handleEditGenre } = this.props;
+    const {
+      groupedGenres,
+      handleEditGenre,
+      handleEditTextGenre,
+      saveEditedGenre,
+      radioGenre
+    } = this.props;
     if (groupedGenres.length > 0) {
       const arrGenres = groupedGenres.map(genre => {
         return genre;
@@ -20,7 +26,7 @@ class EditGenres extends Component {
                 type="radio"
                 value={genre}
                 name="edit"
-                onClick={handleEditGenre}
+                onChange={handleEditGenre}
               />
               <p className="option-genre-label">{genre}</p>
             </label>
@@ -34,6 +40,17 @@ class EditGenres extends Component {
           <ul className="FilterCheck_nav" onChange={this.handleEditGenre}>
             {genresRadio}
           </ul>
+          <label>
+            <input
+              className="option-genre-input"
+              id={radioGenre}
+              type="text"
+              name="edit"
+              placeholder={radioGenre}
+              onKeyUp={handleEditTextGenre}
+            />
+          </label>
+          <button onClick={saveEditedGenre}>Save Edition</button>
         </div>
       );
     } else {
