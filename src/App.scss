@@ -31,11 +31,7 @@ $cancel-red: #ff5350;
   padding: 20px;
   font-size: 50px;
   color: $accent-color;
-  transition: all 0.5s;
-  &:hover {
-    transform: rotate(30deg);
-    cursor: pointer;
-  }
+  transform: rotate(0deg);
 }
 .Header_nav {
   list-style: none;
@@ -60,7 +56,6 @@ $cancel-red: #ff5350;
 
 /*BooksList Component*/
 .catalogue_header {
-  width: 100vw;
   grid-area: header;
   text-align: center;
 }
@@ -110,13 +105,13 @@ $cancel-red: #ff5350;
   cursor: pointer;
 }
 
-.table_btn-update {
+.btn-update {
   color: $dark-grey;
   &:hover {
     color: $accent-color;
   }
 }
-.table_btn-delete {
+.btn-delete {
   color: $dark-grey;
   &:hover {
     color: $cancel-red;
@@ -132,8 +127,9 @@ $cancel-red: #ff5350;
   min-width: 150px;
   padding-right: 20px;
 }
-.FilterCheck_title {
+.input-legend {
   font-size: 1em;
+  font-weight: 700;
 }
 .FilterCheck_nav {
   list-style: none;
@@ -155,6 +151,61 @@ $cancel-red: #ff5350;
 }
 
 /*AddBook Component*/
+.AddBook {
+  width: 100vw;
+}
+.AddBook_wrapper {
+  position: relative;
+  padding: 30px;
+  width: 500px;
+  min-height: 600px;
+  margin: 0 auto;
+  border: 1px solid $dark-grey;
+  -webkit-box-shadow: 6px 6px 14px 0px $dark-grey;
+  -moz-box-shadow: 6px 6px 14px 0px $dark-grey;
+  box-shadow: 6px 6px 14px 0px $dark-grey;
+}
+.AddBook_title {
+  text-align: center;
+  padding: 20px 0;
+}
+.form-input-text {
+  height: 20px;
+  outline: none;
+  font-size: 1em;
+}
+.form-input-text-title {
+  width: 100%;
+}
+.form-new-genre-group {
+  display: grid;
+  grid-template-columns: 200px 20px;
+  align-content: center;
+}
+.form-buttons-group {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+.form-buttons {
+  width: 100px;
+  font-weight: 700;
+  font-size: 1em;
+  padding: 8px 0px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1px solid $dark-grey;
+}
+.form-button-discard {
+}
+.form-button-save {
+  text-transform: uppercase;
+  margin-left: 14px;
+  background-color: $dark-grey;
+  color: $accent-color;
+}
+
 // width: 100px;
 // height: 40px;
 // letter-spacing: 1px;
