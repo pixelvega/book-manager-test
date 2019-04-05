@@ -3,6 +3,12 @@ import { withRouter } from "react-router-dom";
 import UpdateBookGenres from "./UpdateBookGenres";
 
 class AddBook extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps, nextState);
+    console.log(this.props, this.state);
+
+    return false;
+  }
   render() {
     const {
       handleTitle,

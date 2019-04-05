@@ -15,12 +15,17 @@ class Header extends Component {
         </div>
         <nav className="Header_nav">
           <li className="Header_nav-link">
-            <Link className="Link" to="/" replace onClick={checkView}>
+            <Link className="Link" to="/" replace={false} onClick={checkView}>
               Catalogue
             </Link>
           </li>
           <li className="Header_nav-link">
-            <Link className="Link" to="/AddBook/" replace onClick={clearForm}>
+            <Link
+              className="Link"
+              to="/AddBook/"
+              replace={false}
+              onClick={clearForm}
+            >
               New book
             </Link>
           </li>
@@ -28,7 +33,7 @@ class Header extends Component {
             <Link
               className="Link"
               to="/EditGenres/"
-              replace
+              replace={false}
               onClick={checkView}
             >
               Edit genres

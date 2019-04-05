@@ -274,9 +274,16 @@ class App extends Component {
           };
         },
         () => {
+          // return (this.props.history.location.pathname = "/");
+          // console.log("CONFIRM: ", this.props.history);
+
           return this.props.history.push("/");
         }
       );
+    } else {
+      this.props.location.pathname = "/EditBook/";
+      // console.log("NO CONFIRM: ", this.props.history);
+      // this.props.history.location.pathname = pathname;
     }
   };
 
