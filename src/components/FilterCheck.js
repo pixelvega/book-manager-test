@@ -29,7 +29,7 @@ class FilterCheck extends Component {
 
       return (
         <div className="FilterCheck_wrapper">
-          <h3 className="FilterCheck_title">Select by genre:</h3>
+          <p className="input-legend FilterCheck_title">Select by genre:</p>
           <ul className="FilterCheck_nav">{genres}</ul>
         </div>
       );

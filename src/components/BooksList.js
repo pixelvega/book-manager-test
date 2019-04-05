@@ -22,7 +22,7 @@ class BooksList extends Component {
           <td className="table__td">{book.prize}€</td>
           <td className="table__td table__td-btn">
             <button
-              className="btn table_btn-update"
+              className="btn btn-update"
               onClick={() => {
                 return updateBook(book.title, book.prize, book.id, book.genre);
               }}
@@ -32,7 +32,7 @@ class BooksList extends Component {
           </td>
           <td className="table__td table__td-btn">
             <button
-              className="btn table_btn-delete"
+              className="btn btn-delete"
               onClick={() => {
                 return deleteBook(book.id, book.title);
               }}
