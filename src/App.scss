@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
 
 /*Colors*/
 $dark-grey: #222222;
@@ -67,6 +67,9 @@ $cancel-red: #ff5350;
     "header"
     "content"
     "sidebar";
+}
+.catalogue_header-p-number {
+  font-weight: 700;
 }
 .table {
   width: 100%;
@@ -170,6 +173,7 @@ $cancel-red: #ff5350;
   padding: 20px 0;
 }
 .form-input-text {
+  padding-left: 10px;
   height: 20px;
   outline: none;
   font-size: 1em;
@@ -180,7 +184,7 @@ $cancel-red: #ff5350;
 .form-new-genre-group {
   display: grid;
   grid-template-columns: 200px 20px;
-  align-content: center;
+  align-items: center;
 }
 .form-buttons-group {
   position: absolute;
@@ -206,6 +210,18 @@ $cancel-red: #ff5350;
   color: $accent-color;
 }
 
+/*EditGenres Component*/
+.EditGenres_wrapper {
+  width: 250px;
+  margin: 0 auto;
+}
+.EditGenres_header {
+  text-align: center;
+}
+.EditGenes_subtitle {
+  font-style: italic;
+  font-size: 0.8em;
+}
 // width: 100px;
 // height: 40px;
 // letter-spacing: 1px;
