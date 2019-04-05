@@ -72,7 +72,7 @@ class AddBook extends Component {
                     saveGenre();
                   }}
                 >
-                  <i class="fas fa-check-circle" />
+                  <i className="fas fa-check-circle" />
                 </button>
               </div>
             </label>

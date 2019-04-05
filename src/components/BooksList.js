@@ -119,7 +119,7 @@ class BooksList extends Component {
         </main>
       );
     } else {
-      return <div>No hay datos</div>;
+      return <div>There is no data.</div>;
     }
   }
 }

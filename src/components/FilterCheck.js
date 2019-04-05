@@ -34,7 +34,7 @@ class FilterCheck extends Component {
         </div>
       );
     } else {
-      return <div>CheckboxList</div>;
+      return <div />;
     }
   }
 }
