@@ -22,6 +22,8 @@ class App extends Component {
       newGenre: "",
       radioGenre: "",
       editedGenre: "",
+      previousPathname: "/",
+      newPathname: "/",
       actualBook: {
         genres: []
       }
@@ -230,12 +232,15 @@ class App extends Component {
 
   clearForm = () => {
     let newID = this.generateNewId();
-    this.setState({
-      title: "",
-      prize: "",
-      index: newID,
-      genres: []
-    });
+    this.setState(
+      {
+        title: "",
+        prize: "",
+        index: newID,
+        genres: []
+      },
+      () => this.discardChanges()
+    );
   };
 
   generateNewId = () => {
@@ -254,15 +259,57 @@ class App extends Component {
   };
 
   discardChanges = () => {
-    const { pathname, actualBook, booksList } = this.state;
+    const { pathname, actualBook, booksList, newPathname } = this.state;
+    console.log("discardChanges newPathname", newPathname);
+
     this.getGenres(booksList);
-    let userConfirm = true;
-    if (pathname === "/AddBook/" || pathname === "/EditBook/") {
+
+    switch (newPathname) {
+      case "/AddBook/":
+        this.confirmDiscard();
+        break;
+      case "/EditGenres/":
+        this.confirmDiscard();
+        break;
+      case "/":
+        this.confirmDiscard();
+        break;
+      default:
+        console.log("default");
+    }
+    // if (newPathname === "/AddBook/" || pathname === "/EditBook/") {
+    //   userConfirm = window.confirm(
+    //     "Are you sure you want to discard the changes?"
+    //   );
+    // }
+
+    // if (userConfirm) {
+    //   this.setState(
+    //     () => {
+    //       return {
+    //         title: actualBook.title,
+    //         prize: actualBook.prize,
+    //         index: actualBook.index,
+    //         genres: actualBook.genres,
+    //         newPathname: pathname
+    //       };
+    //     },
+    //     () => this.props.history.push(newPathname)
+    //   );
+    // }
+  };
+
+  confirmDiscard = () => {
+    const { actualBook, previousPathname, newPathname } = this.state;
+    let userConfirm = false;
+    console.log("confirmDiscard previousPathname", previousPathname);
+    console.log("confirmDiscard newPathname", newPathname);
+
+    if (previousPathname === "/AddBook/" || previousPathname === "/EditBook/") {
       userConfirm = window.confirm(
         "Are you sure you want to discard the changes?"
       );
     }
-
     if (userConfirm) {
       this.setState(
         () => {
@@ -274,9 +321,15 @@ class App extends Component {
           };
         },
         () => {
-          return this.props.history.push("/");
+          this.props.history.push(newPathname);
+
+          return (this.props.location.pathname = `${newPathname}`);
         }
       );
+    } else {
+      this.props.history.push(previousPathname);
+
+      return (this.props.location.pathname = `${previousPathname}`);
     }
   };
 
@@ -322,11 +375,28 @@ class App extends Component {
     this.props.history.push("/EditBook/");
   };
 
-  checkView = () => {
-    const { pathname } = this.state;
-    if (pathname === "/AddBook/" || pathname === "/EditBook/") {
-      this.discardChanges();
-    }
+  checkView = (e, toLink) => {
+    const { newPathname } = this.state;
+
+    const link = e;
+    link.preventDefault();
+
+    const previousPathname = newPathname;
+    const linkPathname = toLink;
+
+    this.setState(
+      {
+        newPathname: linkPathname,
+        previousPathname: previousPathname
+      },
+      () => {
+        if (newPathname === "/AddBook/") {
+          return this.clearForm();
+        } else if (newPathname !== "/AddBook/") {
+          return this.discardChanges();
+        }
+      }
+    );
   };
 
   componentDidMount() {
@@ -336,8 +406,8 @@ class App extends Component {
 
   savePathname(prevProps) {
     const actualPathname = this.props.location.pathname;
-    const previousPathname = prevProps.location.pathname;
-    if (actualPathname !== previousPathname) {
+    const prevPathname = prevProps.location.pathname;
+    if (actualPathname !== prevPathname) {
       this.setState({
         pathname: actualPathname
       });
@@ -359,12 +429,19 @@ class App extends Component {
       newGenre,
       filteredBooks,
       radioGenre,
-      editedGenre
+      editedGenre,
+      pathname,
+      newPathname
     } = this.state;
 
     return (
       <div className="App">
-        <Header checkView={this.checkView} clearForm={this.clearForm} />
+        <Header
+          checkView={this.checkView}
+          clearForm={this.clearForm}
+          pathname={pathname}
+          newPathname={newPathname}
+        />
         <Switch>
           <Route
             exact
@@ -377,6 +454,7 @@ class App extends Component {
                 handleFilterGenres={this.handleFilterGenres}
                 updateBook={this.updateBook}
                 deleteBook={this.deleteBook}
+                discardChanges={this.discardChanges}
               />
             )}
           />

@@ -1,9 +1,16 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 class Header extends Component {
   render() {
-    const { checkView, clearForm } = this.props;
+    const {
+      checkView,
+      clearForm,
+      discardChanges,
+      newPathname,
+      pathname
+    } = this.props;
+
     return (
       <header className="Header">
         <div className="Header_img">
@@ -15,24 +22,40 @@ class Header extends Component {
         </div>
         <nav className="Header_nav">
           <li className="Header_nav-link">
-            <Link className="Link" to="/" replace onClick={checkView}>
-              Catalogue
-            </Link>
-          </li>
-          <li className="Header_nav-link">
-            <Link className="Link" to="/AddBook/" replace onClick={clearForm}>
-              New book
-            </Link>
-          </li>
-          <li className="Header_nav-link">
-            <Link
+            <NavLink
               className="Link"
-              to="/EditGenres/"
+              to={{
+                pathname: "/"
+              }}
               replace
-              onClick={checkView}
+              onClick={e => checkView(e, "/")}
             >
-              Edit genres
-            </Link>
+              Catalogue
+            </NavLink>
+          </li>
+          <li className="Header_nav-link">
+            <NavLink
+              className="Link"
+              to={{
+                pathname: "/AddBook/"
+              }}
+              replace
+              onClick={e => checkView(e, "/AddBook/")}
+            >
+              New book
+            </NavLink>
+          </li>
+          <li className="Header_nav-link">
+            <NavLink
+              className="Link"
+              to={{
+                pathname: "/EditGenres/"
+              }}
+              replace
+              onClick={e => checkView(e, "/EditGenres/")}
+            >
+              Edit Genres
+            </NavLink>
           </li>
         </nav>
       </header>
@@ -40,4 +63,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
