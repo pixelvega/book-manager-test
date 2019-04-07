@@ -49,7 +49,7 @@ class UpdateBookGenres extends Component {
         </div>
       );
     } else {
-      return <div>CheckboxList</div>;
+      return <div />;
     }
   }
 }

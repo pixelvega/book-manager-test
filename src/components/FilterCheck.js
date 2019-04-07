@@ -7,6 +7,7 @@ class FilterCheck extends Component {
       const arrGenres = groupedGenres.map(genre => {
         return genre;
       });
+
       const uniqueGenres = [...new Set(arrGenres)];
 
       const genres = uniqueGenres.map((genre, index) => {
