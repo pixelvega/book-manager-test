@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Prompt } from "react-router-dom";
 import UpdateBookGenres from "./UpdateBookGenres";
 
 class AddBook extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isBlocking: true
+    };
+  }
   render() {
     const {
       handleTitle,
@@ -17,16 +23,28 @@ class AddBook extends Component {
       genres,
       handleNewGenre,
       newGenre,
-      saveGenre
+      saveGenre,
+      pathname
     } = this.props;
 
+    let sectionTitle = "Add new book";
+
+    if (pathname === "/AddBook/") {
+      sectionTitle = "Add new book";
+    } else if (pathname === "/EditBook/") {
+      sectionTitle = "Edit Book:";
+    }
     return (
       <main className="AddBook">
-        <h2 className="AddBook_title">Add New Book</h2>
+        <Prompt
+          when={this.state.isBlocking}
+          message={"Are you sure you want to discard the changes?"}
+        />
+        <h2 className="AddBook_title">{sectionTitle}</h2>
         <div className="AddBook_wrapper">
           <div className="form-title-group">
             <label className="form-title-label">
-              <p className="input-legend form-title-title">Title:</p>
+              <p className="input-legend form-label-title">Title:</p>
               <input
                 id="title"
                 className="form-input-text form-input-text-title"
@@ -38,14 +56,15 @@ class AddBook extends Component {
           </div>
           <div className="form-prize-group">
             <label className="form-prize-label">
-              <p className="input-legend form-prize-title">Prize:</p>
+              <p className="input-legend form-label-title">Price:</p>
               <input
                 id="prize"
-                className="form-input-text"
+                className="form-input-text form-input-number-price"
                 type="number"
                 onChange={handlePrize}
                 value={prize}
-              />
+              />{" "}
+              €
             </label>
           </div>
           <div className="form-genres-group">
@@ -55,9 +74,7 @@ class AddBook extends Component {
               handleAddGenres={handleAddGenres}
             />
             <label className="form-new-genre-label">
-              <p className="input-legend form-new-genre-title">
-                Add new Genre:
-              </p>
+              <p className="input-legend form-label-title">Add new Genre:</p>
               <div className="form-new-genre-group">
                 <input
                   id="new-genre"
@@ -67,7 +84,9 @@ class AddBook extends Component {
                   value={newGenre}
                 />
                 <button
-                  className="btn btn-update"
+                  className={`btn btn-add ${
+                    newGenre === "" ? "" : "btn-add-icon"
+                  }`}
                   onClick={() => {
                     saveGenre();
                   }}
@@ -81,7 +100,11 @@ class AddBook extends Component {
             <button
               className="form-buttons form-button-discard"
               onClick={() => {
-                discardChanges(title, prize, index, genres);
+                this.setState({ isBlocking: false }, () => {
+                  discardChanges(() => {
+                    this.setState({ isBlocking: true });
+                  });
+                });
               }}
             >
               Discard
@@ -89,7 +112,7 @@ class AddBook extends Component {
             <button
               className="form-buttons form-button-save"
               onClick={() => {
-                saveBook(index);
+                this.setState({ isBlocking: false }, () => saveBook(index));
               }}
             >
               Save
