@@ -15,6 +15,7 @@ class App extends Component {
       booksList: [],
       groupedGenres: [],
       genresSelected: [],
+      pathname: "/",
       title: "",
       prize: "",
       index: "",
@@ -119,6 +120,7 @@ class App extends Component {
   }
 
   handleTitle = e => {
+    console.log("LANZO HANDLETITLEEEE");
     const title = e.currentTarget.value;
     this.setState({
       title: title
@@ -212,18 +214,23 @@ class App extends Component {
         if (books[i].id === index) {
           books[index] = newBook;
           this.getGenres(books);
+          this.clearForm();
           break;
         }
       }
     } else {
-      this.getGenres(books);
-      this.setState(prevState => {
-        const nextState = [...prevState.booksList, newBook];
-        return {
-          booksList: nextState,
-          filteredBooks: nextState
-        };
-      });
+      this.setState(
+        prevState => {
+          const nextState = [...prevState.booksList, newBook];
+          return {
+            booksList: nextState,
+            filteredBooks: nextState
+          };
+        },
+        () => {
+          this.clearForm();
+        }
+      );
     }
     this.props.history.push("/");
   };
@@ -234,7 +241,8 @@ class App extends Component {
       title: "",
       prize: "",
       index: newID,
-      genres: []
+      genres: [],
+      newGenre: ""
     });
   };
 
@@ -253,7 +261,7 @@ class App extends Component {
     return newId;
   };
 
-  discardChanges = () => {
+  discardChanges = _callback => {
     const { pathname, actualBook, booksList } = this.state;
     this.getGenres(booksList);
     let userConfirm = true;
@@ -277,6 +285,10 @@ class App extends Component {
           return this.props.history.push("/");
         }
       );
+    } else {
+      if (typeof _callback === "function") {
+        _callback();
+      }
     }
   };
 
@@ -359,12 +371,17 @@ class App extends Component {
       newGenre,
       filteredBooks,
       radioGenre,
-      editedGenre
+      editedGenre,
+      pathname
     } = this.state;
 
     return (
       <div className="App">
-        <Header checkView={this.checkView} clearForm={this.clearForm} />
+        <Header
+          pathname={pathname}
+          checkView={this.checkView}
+          clearForm={this.clearForm}
+        />
         <Switch>
           <Route
             exact
@@ -397,6 +414,7 @@ class App extends Component {
                 newGenre={newGenre}
                 handleAddGenres={this.handleAddGenres}
                 saveGenre={this.saveGenre}
+                pathname={pathname}
               />
             )}
           />
@@ -417,6 +435,7 @@ class App extends Component {
                 newGenre={newGenre}
                 handleAddGenres={this.handleAddGenres}
                 saveGenre={this.saveGenre}
+                pathname={pathname}
               />
             )}
           />
