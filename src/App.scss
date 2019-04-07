@@ -7,16 +7,21 @@ $accent-color: #73ff73;
 $cancel-red: #ff5350;
 
 /*Common*/
+body {
+  background-color: $natural-white;
+}
 .App {
   width: 100vw;
   min-width: 768px;
   height: 100vh;
   font-family: "Roboto", sans-serif;
   letter-spacing: 0.08em;
-  background-color: $natural-white;
 }
 .main {
   padding: 30px;
+}
+.hidden {
+  display: none;
 }
 /*Header Component*/
 .Header {
@@ -28,16 +33,19 @@ $cancel-red: #ff5350;
   padding: 0px 16px;
 }
 .Header_img {
-  padding: 20px;
-  font-size: 50px;
-  color: $accent-color;
-  transform: rotate(0deg);
+  padding: 10px;
+}
+.Logo {
+  width: 50px;
+  height: 50px;
+  fill: $accent-color;
 }
 .Header_nav {
   list-style: none;
   text-transform: uppercase;
   display: flex;
 }
+/*Custom Link */
 .Header_nav-link {
   border-right: 2px solid $natural-white;
   padding: 4px 12px;
@@ -52,6 +60,10 @@ $cancel-red: #ff5350;
   &:hover {
     color: $accent-color;
   }
+}
+.LinkActive {
+  color: $accent-color;
+  cursor: default;
 }
 
 /*BooksList Component*/
@@ -114,6 +126,9 @@ $cancel-red: #ff5350;
     color: $accent-color;
   }
 }
+.btn-add-icon {
+  color: $accent-color;
+}
 .btn-delete {
   color: $dark-grey;
   &:hover {
@@ -161,12 +176,12 @@ $cancel-red: #ff5350;
   position: relative;
   padding: 30px;
   width: 500px;
-  min-height: 600px;
+  min-height: 550px;
   margin: 0 auto;
   border: 1px solid $dark-grey;
-  -webkit-box-shadow: 6px 6px 14px 0px $dark-grey;
-  -moz-box-shadow: 6px 6px 14px 0px $dark-grey;
-  box-shadow: 6px 6px 14px 0px $dark-grey;
+  -webkit-box-shadow: 3px 3px 12px -2px $dark-grey;
+  -moz-box-shadow: 3px 3px 12px -2px $dark-grey;
+  box-shadow: 3px 3px 12px -2px $dark-grey;
 }
 .AddBook_title {
   text-align: center;
@@ -178,8 +193,17 @@ $cancel-red: #ff5350;
   outline: none;
   font-size: 1em;
 }
+.form-label-title,
+.input-legend {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
 .form-input-text-title {
-  width: 100%;
+  width: calc(100% - 15px);
+}
+.form-input-number-price {
+  width: 80px;
 }
 .form-new-genre-group {
   display: grid;
@@ -201,13 +225,15 @@ $cancel-red: #ff5350;
   box-sizing: border-box;
   border: 1px solid $dark-grey;
 }
-.form-button-discard {
-}
 .form-button-save {
   text-transform: uppercase;
   margin-left: 14px;
   background-color: $dark-grey;
-  color: $accent-color;
+  color: $natural-white;
+
+  &:hover {
+    color: $accent-color;
+  }
 }
 
 /*EditGenres Component*/
@@ -222,10 +248,3 @@ $cancel-red: #ff5350;
   font-style: italic;
   font-size: 0.8em;
 }
-// width: 100px;
-// height: 40px;
-// letter-spacing: 1px;
-// text-transform: uppercase;
-// font-weight: 600;
-// font-size: 1em;
-// color: black;
