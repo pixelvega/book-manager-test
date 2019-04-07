@@ -1,38 +1,33 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import CustomLink from "./CustomLink";
+import { ReactComponent as Logo } from "../images/books-stack-of-three.svg";
 
 class Header extends Component {
   render() {
-    const { checkView, clearForm } = this.props;
+    const { pathname, clearForm } = this.props;
     return (
       <header className="Header">
         <div className="Header_img">
-          {/* <img
-            src="https://img.icons8.com/ios/50/000000/book-filled.png"
-            alt="logo Book Store"
-          /> */}
-          <i className="fas fa-book" />
+          <Logo />
         </div>
         <nav className="Header_nav">
           <li className="Header_nav-link">
-            <Link className="Link" to="/" replace onClick={checkView}>
-              Catalogue
-            </Link>
+            <CustomLink to={"/"} pathname={pathname} linkName={"Catalogue"} />
           </li>
           <li className="Header_nav-link">
-            <Link className="Link" to="/AddBook/" replace onClick={clearForm}>
-              New book
-            </Link>
+            <CustomLink
+              to={"/AddBook/"}
+              pathname={pathname}
+              linkName={"Add book"}
+              clearForm={clearForm}
+            />
           </li>
           <li className="Header_nav-link">
-            <Link
-              className="Link"
-              to="/EditGenres/"
-              replace
-              onClick={checkView}
-            >
-              Edit genres
-            </Link>
+            <CustomLink
+              to={"/EditGenres/"}
+              pathname={pathname}
+              linkName={"Edit genres"}
+            />
           </li>
         </nav>
       </header>
