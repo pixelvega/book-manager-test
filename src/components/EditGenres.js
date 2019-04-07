@@ -53,7 +53,9 @@ class EditGenres extends Component {
             <label>
               <div className="form-new-genre-group">
                 <input
-                  className="option-genre-input form-input-text"
+                  className={`option-genre-input form-input-text ${
+                    radioGenre === "" ? "hidden" : ""
+                  }`}
                   id={radioGenre}
                   type="text"
                   name="edit"
@@ -61,8 +63,12 @@ class EditGenres extends Component {
                   placeholder={radioGenre}
                   onChange={handleEditTextGenre}
                 />
-                <button className="btn btn-update" onClick={saveEditedGenre}>
-                  <i className="fas fa-check-circle" />
+                <button className="btn btn-add-icon" onClick={saveEditedGenre}>
+                  <i
+                    className={`fas fa-check-circle ${
+                      editedGenre === "" ? "hidden" : ""
+                    }`}
+                  />
                 </button>
               </div>
             </label>
@@ -70,7 +76,15 @@ class EditGenres extends Component {
         </main>
       );
     } else {
-      return <div>CheckboxList</div>;
+      return (
+        <div className="EditGenres_header">
+          <h3 className="EditGenres_title">Select genre to modify its name:</h3>
+          <p className="EditGenes_subtitle">
+            *This action modifies the name of the genres stored in each book.
+          </p>
+          <p>No genres were found.</p>
+        </div>
+      );
     }
   }
 }
